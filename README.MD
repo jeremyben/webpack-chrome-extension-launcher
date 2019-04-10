@@ -4,9 +4,9 @@ Jumptstart your Chrome extension development.
 
 ## Why
 
-Usually when developing a Chrome extension, you must first go to the `chrome://extensions/` page, enable developer mode, load the unpacked extension and select its path.
+Usually when developing a Chrome extension, you must first go to the `chrome://extensions/` page, enable developer mode, load the unpacked extension, select its path, and finally open background page devtools.
 
-This plugin spares you all of those clicks. 💅
+This webpack plugin spares you all of those clicks. 💅
 
 ## Get Started
 
@@ -38,6 +38,7 @@ module.exports = {
 - `chrome://extensions/` as homepage.
 - Background page devtools opened on startup.
 - Chrome devtools automatically opened in new tabs.
+- Webpack process killed on Chrome instance exit.
 
 #### Options
 

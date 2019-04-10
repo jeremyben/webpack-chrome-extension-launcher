@@ -26,7 +26,7 @@ class ChromeExtensionLauncher {
 
 			const path = this.path || compilation.outputOptions.path
 			const userDataDir = this.createTempUserDataDir()
-			this.launchChrome(path, userDataDir)
+			this.launchChrome(path, userDataDir).then(process.exit)
 			this.enableDeveloperMode(userDataDir)
 			this.launched = true
 			callback()
@@ -71,7 +71,8 @@ class ChromeExtensionLauncher {
 				`"${chrome}" --load-extension="${extension}","${startpage}","${devtools}" --user-data-dir="${userDataDir}" --auto-open-devtools-for-tabs`,
 				(error, stdout, stderr) => {
 					if (error) throw error
-					resolve()
+					console.log('[Chrome Extension Launcher] Chrome instance exited')
+					resolve(0)
 				}
 			)
 			child.stdout.pipe(process.stdout)
