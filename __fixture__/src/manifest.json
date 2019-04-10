@@ -1,0 +1,20 @@
+{
+	"name": "webpack-webextension-background-logger-test",
+	"manifest_version": 2,
+	"version": "1",
+	"permissions": ["activeTab", "declarativeContent"],
+	"background": { "scripts": ["background.js"], "persistent": false },
+	"content_scripts": [
+		{
+			"js": ["content-script.js"],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"browser_action": {
+		"default_popup": "popup.html",
+		"browser_style": true
+	},
+	"options_ui": {
+		"page": "options.html"
+	}
+}

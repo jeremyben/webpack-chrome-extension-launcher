@@ -1,0 +1,12 @@
+{
+	"npm.packageManager": "yarn",
+	"editor.formatOnSave": true,
+	"prettier.requireConfig": true,
+	"prettier.disableLanguages": ["markdown"],
+	"json.schemas": [
+		{
+			"fileMatch": ["/manifest.json"],
+			"url": "http://json.schemastore.org/chrome-manifest"
+		}
+	]
+}

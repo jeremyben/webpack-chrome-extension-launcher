@@ -1,0 +1,35 @@
+{
+	"name": "webpack-chrome-extension-launcher",
+	"version": "1.0.0",
+	"description": "Dedicated Chrome launcher for your extension development",
+	"author": "Jeremy Bensimon",
+	"repository": "github:jeremyben/webpack-chrome-extension-launcher",
+	"license": "MIT",
+	"main": "src/main.js",
+	"keywords": [
+		"webpack",
+		"plugin",
+		"webextension",
+		"extension",
+		"chrome",
+		"launcher",
+		"devtools"
+	],
+	"scripts": {
+		"test": "webpack --config __fixture__/webpack.config.js"
+	},
+	"dependencies": {
+		"chrome-location": "^1.2.1",
+		"lodash.get": "^4.4.2",
+		"lodash.set": "^4.3.2",
+		"webpack": "^4.29.6",
+		"webpack-inject-plugin": "^1.1.2"
+	},
+	"devDependencies": {
+		"@types/chrome": "^0.0.81",
+		"@types/lodash.get": "^4.4.6",
+		"@types/lodash.set": "^4.3.6",
+		"copy-webpack-plugin": "^5.0.2",
+		"webpack-cli": "^3.3.0"
+	}
+}
