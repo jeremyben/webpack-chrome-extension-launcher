@@ -1,20 +1,10 @@
 {
-	"name": "webpack-webextension-background-logger-test",
+	"name": "webpack-chrome-extension-launcher-test",
 	"manifest_version": 2,
 	"version": "1",
 	"permissions": ["activeTab", "declarativeContent"],
 	"background": { "scripts": ["background.js"], "persistent": false },
-	"content_scripts": [
-		{
-			"js": ["content-script.js"],
-			"matches": ["<all_urls>"]
-		}
-	],
-	"browser_action": {
-		"default_popup": "popup.html",
-		"browser_style": true
-	},
-	"options_ui": {
-		"page": "options.html"
-	}
+	"content_scripts": [{ "js": ["content-script.js"], "matches": ["<all_urls>"] }],
+	"browser_action": { "default_popup": "popup.html", "browser_style": true },
+	"options_ui": { "page": "options.html" }
 }

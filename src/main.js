@@ -2,16 +2,14 @@ const { exec } = require('child_process')
 const { tmpdir } = require('os')
 const { resolve } = require('path')
 const { mkdirSync, existsSync, readFileSync, writeFileSync } = require('fs')
-const InjectPlugin = require('webpack-inject-plugin').default
 const get = require('lodash.get')
 const set = require('lodash.set')
 const chrome = require('chrome-location')
 
 class ChromeExtensionLauncher {
-	/** @param {{path?: string; entry?: string}} options */
+	/** @param {{path?: string}} options */
 	constructor(options = {}) {
 		this.path = options.path || '' // output.path by default
-		this.entry = options.entry || 'background'
 		this.launched = false
 	}
 
@@ -33,12 +31,6 @@ class ChromeExtensionLauncher {
 			this.launched = true
 			callback()
 		})
-
-		// Inject code to open extensions page on startup
-		// (we can't open chrome protocol urls any other way)
-		new InjectPlugin(() => `chrome.tabs.update({ url: 'chrome://extensions/' })`, {
-			entryName: this.entry,
-		}).apply(compiler)
 	}
 
 	/**
@@ -68,11 +60,16 @@ class ChromeExtensionLauncher {
 	launchChrome(extension, userDataDir) {
 		console.log('[Chrome Extension Launcher] Launching Chrome instance')
 
+		// Temporary extension to open extensions page on startup
+		const startpage = resolve(__dirname, 'startpage')
+		// Temporary app to open background page devtools on startup
+		const devtools = resolve(__dirname, 'devtools')
+
 		return new Promise((resolve) => {
 			// https://peter.sh/experiments/chromium-command-line-switches/
 			const child = exec(
-				`"${chrome}" --load-extension="${extension}" --user-data-dir="${userDataDir}" --auto-open-devtools-for-tabs`,
-				(error) => {
+				`"${chrome}" --load-extension="${extension}","${startpage}","${devtools}" --user-data-dir="${userDataDir}" --auto-open-devtools-for-tabs`,
+				(error, stdout, stderr) => {
 					if (error) throw error
 					resolve()
 				}

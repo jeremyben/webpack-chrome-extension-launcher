@@ -34,9 +34,10 @@ module.exports = {
 
 🚀 A _dedicated_ Chrome instance loaded _exclusively_ with your unpacked extension will launch _once_ after initial compilation (no need to worry about watch mode), with the following perks :
 
+- Developer mode enabled.
 - `chrome://extensions/` as homepage.
-- developer mode enabled.
-- devtools opened in new tabs.
+- Background page devtools opened on startup.
+- Chrome devtools automatically opened in new tabs.
 
 #### Options
 
