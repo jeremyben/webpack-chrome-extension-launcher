@@ -7,9 +7,11 @@ const set = require('lodash.set')
 const chrome = require('chrome-location')
 
 class ChromeExtensionLauncher {
-	/** @param {{path?: string}} options */
+	/** @param {{path?: string, launchURL?: string, autoDevtools?: boolean}} options */
 	constructor(options = {}) {
-		this.path = options.path || '' // output.path by default
+		this.path = options.path // output.path by default
+		this.launchURL = options.launchURL || ''
+		this.autoDevtoolsFlag = options.autoDevtools ? '--auto-open-devtools-for-tabs' : ''
 		this.launched = false
 	}
 
@@ -43,7 +45,7 @@ class ChromeExtensionLauncher {
 			mkdirSync(userDataDir)
 		} catch (error) {
 			if (error.code === 'EEXIST') {
-				console.log('[Chrome Extension Launcher] Using existing temporary user profile')
+				console.log('[Chrome Extension Launcher] Use existing temporary user profile')
 			} else {
 				throw error
 			}
@@ -68,7 +70,11 @@ class ChromeExtensionLauncher {
 		return new Promise((resolve) => {
 			// https://peter.sh/experiments/chromium-command-line-switches/
 			const child = exec(
-				`"${chrome}" --load-extension="${extension}","${startpage}","${devtools}" --user-data-dir="${userDataDir}" --auto-open-devtools-for-tabs`,
+				`"${chrome}" ${
+					this.launchURL
+				} --load-extension="${extension}","${startpage}","${devtools}" --user-data-dir="${userDataDir}" ${
+					this.autoDevtoolsFlag
+				}`,
 				(error, stdout, stderr) => {
 					if (error) throw error
 					console.log('[Chrome Extension Launcher] Chrome instance exited')
@@ -82,10 +88,10 @@ class ChromeExtensionLauncher {
 
 	/**
 	 * Enables developer mode for extensions
-	 * @param {string} usrDataDir
+	 * @param {string} userDataDir
 	 */
-	enableDeveloperMode(usrDataDir) {
-		const prefsFile = resolve(usrDataDir, 'Default', 'Preferences')
+	enableDeveloperMode(userDataDir) {
+		const prefsFile = resolve(userDataDir, 'Default', 'Preferences')
 
 		return this.waitForFileEvery(prefsFile, 10).then(() => {
 			const prefs = JSON.parse(readFileSync(prefsFile, 'utf8'))

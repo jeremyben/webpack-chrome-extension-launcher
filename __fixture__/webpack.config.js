@@ -26,8 +26,7 @@ module.exports = (env, argv) => {
 		devtool: isDev ? 'inline-source-map' : false,
 		watch: isDev,
 		plugins: [
-			new ChromeExtensionLauncher(),
-			// @ts-ignore
+			new ChromeExtensionLauncher({ launchURL: 'https://github.com', autoDevtools: true }),
 			new Copy([src('options.html'), src('popup.html'), src('manifest.json')]),
 		],
 	}

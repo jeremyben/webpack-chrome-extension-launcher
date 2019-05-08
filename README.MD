@@ -37,15 +37,25 @@ module.exports = {
 - Developer mode enabled.
 - `chrome://extensions/` as homepage.
 - Background page devtools opened on startup.
-- Chrome devtools automatically opened in new tabs.
 - Webpack process killed on Chrome instance exit.
 
 #### Options
 
-Chrome Extension Launcher looks for an unpacked extension in the [`output.path`](https://webpack.js.org/configuration/output/#outputpath) property of your webpack config, but you can specify your own path :
+- You can have Chrome devtools automatically opened in new tabs.
+- You can start Chrome with a custom URL.
 
 ```js
-new ChromeExtensionLauncher({ path: '/path/to/extension' })
+new ChromeExtensionLauncher({ autoDevtools: true, launchURL: 'https://github.com' })
+```
+
+- Chrome Extension Launcher looks for an unpacked extension in the [`output.path`](https://webpack.js.org/configuration/output/#outputpath) property of your webpack config, but you can specify your own path.
+
+```js
+new ChromeExtensionLauncher({
+  autoDevtools: true,
+  launchURL: 'https://github.com',
+  path: '/path/to/extension'
+})
 ```
 
 #### Production build
