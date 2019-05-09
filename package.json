@@ -6,6 +6,9 @@
 	"repository": "github:jeremyben/webpack-chrome-extension-launcher",
 	"license": "MIT",
 	"main": "src/main.js",
+	"files": [
+		"src"
+	],
 	"keywords": [
 		"webpack",
 		"plugin",
