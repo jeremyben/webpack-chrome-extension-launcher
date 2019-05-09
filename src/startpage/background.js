@@ -8,9 +8,13 @@ chrome.tabs.query({ active: true }, ([activeTab]) => {
 	if (activeTab.url === 'chrome://newtab/') {
 		chrome.tabs.update(extensionTab, uninstallSelf)
 	} else {
-		// If we launch with a specific url, we still create the extension tab and move it left.
-		chrome.tabs.create(extensionTab, ({ id }) => {
-			chrome.tabs.move(id, { index: 0 }, uninstallSelf)
+		// If we launch with a custom url, we still create the extension tab and move it left.
+		chrome.tabs.getCurrent((originalTab) => {
+			chrome.tabs.create(extensionTab, ({ id }) => {
+				chrome.tabs.move(id, { index: 0 }, uninstallSelf)
+				// We reactivate the custom url tab
+				chrome.tabs.update(originalTab.id, { active: true })
+			})
 		})
 	}
 })
