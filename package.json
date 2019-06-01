@@ -25,10 +25,10 @@
 		"chrome-location": "^1.2.1",
 		"lodash.get": "^4.4.2",
 		"lodash.set": "^4.3.2",
-		"webpack": "^4.30.0"
+		"webpack": "^4.32.2"
 	},
 	"devDependencies": {
-		"@types/chrome": "^0.0.83",
+		"@types/chrome": "^0.0.86",
 		"@types/lodash.get": "^4.4.6",
 		"@types/lodash.set": "^4.3.6",
 		"copy-webpack-plugin": "^5.0.3",
