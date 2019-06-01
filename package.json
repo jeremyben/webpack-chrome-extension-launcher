@@ -1,6 +1,6 @@
 {
 	"name": "webpack-chrome-extension-launcher",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Dedicated Chrome launcher for your extension development",
 	"author": "Jeremy Bensimon",
 	"repository": "github:jeremyben/webpack-chrome-extension-launcher",
