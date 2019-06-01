@@ -11,7 +11,7 @@ class ChromeExtensionLauncher {
 	constructor(options = {}) {
 		this.path = options.path // output.path by default
 		this.launchURL = options.launchURL || ''
-		this.autoDevtoolsFlag = options.autoDevtools ? '--auto-open-devtools-for-tabs' : ''
+		this.devtoolsFlag = options.autoDevtools ? '--auto-open-devtools-for-tabs' : ''
 		this.launched = false
 	}
 
@@ -28,7 +28,7 @@ class ChromeExtensionLauncher {
 
 			const path = this.path || compilation.outputOptions.path
 			const userDataDir = this.createTempUserDataDir()
-			this.launchChrome(path, userDataDir).then(process.exit)
+			this.launchChrome(path, userDataDir)
 			this.enableDeveloperMode(userDataDir)
 			this.launched = true
 			callback()
@@ -65,22 +65,24 @@ class ChromeExtensionLauncher {
 		// Temporary extension to open extensions page on startup
 		const startpage = resolve(__dirname, 'startpage')
 		// Temporary app to open background page devtools on startup
-		const devtools = resolve(__dirname, 'devtools')
+		const backgroundDevtools = resolve(__dirname, 'devtools')
 
 		return new Promise((resolve) => {
 			// https://peter.sh/experiments/chromium-command-line-switches/
-			const child = exec(
-				`"${chrome}" ${
-					this.launchURL
-				} --load-extension="${extension}","${startpage}","${devtools}" --user-data-dir="${userDataDir}" ${
-					this.autoDevtoolsFlag
-				}`,
-				(error, stdout, stderr) => {
-					if (error) throw error
+			const extensionFlag = `--load-extension="${extension}","${startpage}","${backgroundDevtools}"`
+			const userDataDirFlag = `--user-data-dir="${userDataDir}"`
+
+			const cmd = `"${chrome}" "${this.launchURL}" ${extensionFlag} ${userDataDirFlag} ${this.devtoolsFlag}`
+
+			const child = exec(cmd, (error, stdout, stderr) => {
+				if (error) throw error
+				if (stderr.includes('Unable to move the cache')) {
+					console.log(`[Chrome Extension Launcher] Chrome instance already running`)
+				} else {
 					console.log('[Chrome Extension Launcher] Chrome instance exited')
-					resolve(0)
+					process.exit()
 				}
-			)
+			})
 			child.stdout.pipe(process.stdout)
 			child.stderr.pipe(process.stderr)
 		})
