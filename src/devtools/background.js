@@ -3,6 +3,7 @@
 // https://stackoverflow.com/questions/35932942
 
 chrome.management.getAll((extensions) => {
+	/** @param {chrome.management.ExtensionInfo} ext */
 	const myExtensionPredicate = (ext) =>
 		ext.type === 'extension' &&
 		ext.installType === 'development' &&
@@ -18,5 +19,5 @@ chrome.management.getAll((extensions) => {
 			chrome.developerPrivate.openDevTools({ renderViewId: -1, renderProcessId: -1, extensionId: id })
 		}
 		chrome.management.uninstallSelf()
-	}, 500)
+	}, 750)
 })
