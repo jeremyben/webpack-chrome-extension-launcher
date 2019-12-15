@@ -4,7 +4,7 @@
 
 chrome.tabs.query({ active: true }, ([initialTab]) => {
 	// No custom launch URL
-	if (initialTab.url === 'chrome://newtab/') {
+	if (initialTab.url === 'chrome://newtab/' || initialTab.url === 'chrome://welcome/') {
 		chrome.tabs.update({ url: 'chrome://extensions/' }, () => chrome.management.uninstallSelf())
 	}
 

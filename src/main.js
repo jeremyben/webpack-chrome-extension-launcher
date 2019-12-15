@@ -68,11 +68,13 @@ class ChromeExtensionLauncher {
 		const backgroundDevtools = resolve(__dirname, 'devtools')
 
 		return new Promise((resolve) => {
+			const chromeLaunchPath = this.launchURL ? `"${chrome}" "${this.launchURL}"` : `"${chrome}"`
+
 			// https://peter.sh/experiments/chromium-command-line-switches/
 			const extensionFlag = `--load-extension="${extension}","${startpage}","${backgroundDevtools}"`
 			const userDataDirFlag = `--user-data-dir="${userDataDir}"`
 
-			const cmd = `"${chrome}" "${this.launchURL}" ${extensionFlag} ${userDataDirFlag} ${this.devtoolsFlag}`
+			const cmd = `${chromeLaunchPath} ${extensionFlag} ${userDataDirFlag} ${this.devtoolsFlag}`
 
 			const child = exec(cmd, (error, stdout, stderr) => {
 				if (error) throw error
