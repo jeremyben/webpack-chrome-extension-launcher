@@ -27,7 +27,7 @@ module.exports = (env, argv) => {
 		watch: isDev,
 		plugins: [
 			new ChromeExtensionLauncher({ launchURL: 'https://github.com', autoDevtools: true }),
-			new Copy([src('options.html'), src('popup.html'), src('manifest.json')]),
+			new Copy({ patterns: [src('options.html'), src('popup.html'), src('manifest.json')] }),
 		],
 	}
 }
